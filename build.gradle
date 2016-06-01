@@ -19,6 +19,23 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    acceptanceTest {
+        java.srcDir file('src/acceptanceTest/java')
+        resources.srcDir file('src/acceptanceTest/resources')
+        compileClasspath += main.output + test.output + configurations.testRuntime
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+task acceptanceTest(type: Test) {
+    description = 'Runs the acceptance tests'
+    group = 'verification'
+    testClassesDir = sourceSets.acceptanceTest.output.classesDir
+    classpath = sourceSets.acceptanceTest.runtimeClasspath
+    reports.html.destination = file("$reports.html.destination/acceptance")
+    reports.junitXml.destination = file("$reports.junitXml.destination/acceptance")}
+
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.3.5.RELEASE'
 
@@ -26,7 +43,7 @@ dependencies {
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.4'
     testCompile group: 'org.springframework', name: 'spring-test', version: '4.2.3.RELEASE'
     testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.0-groovy-2.4'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.3.0'
-    testCompile group: 'info.cukes', name: 'cucumber-java', version: '1.2.4'
-    testCompile group: 'info.cukes', name: 'cucumber-junit', version: '1.2.4'
+    acceptanceTestCompile group: 'org.assertj', name: 'assertj-core', version: '3.3.0'
+    acceptanceTestCompile group: 'info.cukes', name: 'cucumber-java', version: '1.2.4'
+    acceptanceTestCompile group: 'info.cukes', name: 'cucumber-junit', version: '1.2.4'
 }
