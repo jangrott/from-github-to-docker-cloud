@@ -1,4 +1,21 @@
+sudo: required
+
 language: java
 
 jdk:
   - oraclejdk8
+
+env:
+  global:
+    - IMAGE=jangrott/from_github_to_docker_cloud
+
+services:
+  - docker
+
+before_script:
+  - docker build -t $IMAGE .
+
+script:
+  - gradle check
+  - docker run -d -p 8090:8090 $IMAGE
+  - docker ps | grep -q $IMAGE
