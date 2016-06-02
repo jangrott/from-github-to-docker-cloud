@@ -43,7 +43,7 @@ public class LinksStepdefs {
 
     @Then("^second link is (.+)$")
     public void second_link_is(String link) throws Throwable {
-        String secondLink = links.get(1);
+        String secondLink = links.get(0);
 
         assertThat(secondLink).isEqualTo(link);
     }
