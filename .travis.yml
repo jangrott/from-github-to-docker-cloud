@@ -21,9 +21,9 @@ script:
   - docker run -d -p 8090:8090 $IMAGE:stage
   - docker ps | grep -q $IMAGE:stage
   - if [ "$TRAVIS_BRANCH" == "master" ]; then docker push $IMAGE:stage; fi
-  - sleep 120
-  - gradle acceptanceTest -Denv.host=fromgithubtodockercloud-stage.89d7c692.svc.dockerapp.io
+  - if [ "$TRAVIS_BRANCH" == "master" ]; sleep 120; fi
+  - if [ "$TRAVIS_BRANCH" == "master" ]; gradle acceptanceTest -Denv.host=fromgithubtodockercloud-stage.d2ac239b.svc.dockerapp.io -Denv.port=8094; fi
 
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then docker tag $IMAGE:stage $IMAGE:latest
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then docker tag $IMAGE:stage $IMAGE:latest; fi
   - if [ "$TRAVIS_BRANCH" == "master" ]; then docker push $IMAGE:latest; fi

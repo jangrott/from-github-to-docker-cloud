@@ -36,6 +36,7 @@ task acceptanceTest(type: Test) {
     reports.html.destination = file("$reports.html.destination/acceptance")
     reports.junitXml.destination = file("$reports.junitXml.destination/acceptance")
     systemProperty "env.host", System.getProperty("env.host", "localhost");
+    systemProperty "env.port", System.getProperty("env.port", "8090");
 }
 
 dependencies {
