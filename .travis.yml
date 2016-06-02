@@ -21,3 +21,5 @@ script:
   - docker run -d -p 8090:8090 $IMAGE:stage
   - docker ps | grep -q $IMAGE:stage
   - if [ "$TRAVIS_BRANCH" == "master" ]; then docker push $IMAGE:stage; fi
+  - sleep 180
+  - gradle acceptanceTest -Denv.host=fromgithubtodockercloud-stage.89d7c692.svc.dockerapp.io

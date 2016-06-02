@@ -12,13 +12,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LinksStepdefs {
 
+    private String host = System.getProperty("env.host");
     private String url;
     private ResponseEntity<List> responseEntity;
     private List<String> links;
 
     @Given("^App is running on port (\\d+)$")
     public void app_is_running_on_port(int port) throws Throwable {
-        url = "http://localhost:" + port;
+        url = "http://" + host + ":" + port;
     }
 
     @When("^the client requests a list of links$")
