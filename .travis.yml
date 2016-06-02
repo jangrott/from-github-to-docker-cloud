@@ -14,10 +14,10 @@ services:
 
 before_script:
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - docker build -t $IMAGE .
+  - docker build -t $IMAGE:stage .
 
 script:
   - gradle check
-  - docker run -d -p 8090:8090 $IMAGE
-  - docker ps | grep -q $IMAGE
+  - docker run -d -p 8090:8090 $IMAGE:stage
+  - docker ps | grep -q $IMAGE:stage
   - if [ "$TRAVIS_BRANCH" == "master" ]; then docker push $IMAGE:stage; fi
